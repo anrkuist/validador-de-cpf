@@ -1,4 +1,4 @@
-# CPF Validator - Azure Function
+# CPF Validator - Azure Functions
 
 Validador de CPF que consulta diretamente na base da Receita Federal.
 
