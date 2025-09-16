@@ -24,43 +24,48 @@ curl -X POST "https://sua-function.azurewebsites.net/api/validarcpf?code=SUA_KEY
 - `123.456.789-01`
 - `123 456 789 01`
 
-### Respostas da API
+## 📋 Respostas da API
 
-**✅ CPF Válido (200):**
-
+### ✅ CPF Válido (200)
+CPF com dígitos corretos E encontrado na Receita Federal:
 ```json
 {
-  "cpf": "12345678901",
-  "cpf_formatado": "123.456.789-01",
+  "cpf": "123.456.789-01",
   "valido": true,
-  "fonte": "Receita Federal via SCPA"
+  "mensagem": "CPF encontrado na Receita Federal"
 }
 ```
 
-**❌ CPF Inválido (400):**
-
+### ❌ CPF com Dígitos Inválidos (400)
+Falha na validação matemática:
 ```json
 {
-  "cpf": "12345678901",
+  "cpf": "123.456.789-01",
   "valido": false,
-  "erro": "CPF não encontrado na Receita Federal"
+  "error": "CPF invalido (digitos nao conferem)"
 }
 ```
 
-**⚠️ Erro de Formato (400):**
-
+### ❌ CPF Não Encontrado (400)
+Dígitos corretos mas não existe na Receita Federal:
 ```json
 {
-  "erro": "CPF deve ter 11 dígitos"
+  "cpf": "123.456.789-01",
+  "valido": false,
+  "error": "CPF nao encontrado na Receita Federal"
 }
 ```
 
-**🔥 Erro Interno (500):**
-
+### 🔥 Erro de Conexão (500)
 ```json
 {
-  "erro": "Timeout na consulta - tente novamente"
+  "error": "Erro na consulta: timeout"
 }
+```
+
+### ⚠️ Parâmetro Faltando (400)
+```
+Passe um CPF na query string (?cpf=123456789) ou no corpo da requisição.
 ```
 
 ## 🛠️ Desenvolvimento Local
